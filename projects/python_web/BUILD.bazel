@@ -28,7 +28,7 @@ container_push(
   name = "publish",
   format = "Docker",
   registry = "registry.hub.docker.com",
-  repository = "krisfoster96/monorepo-python-web",
+  repository = "quanconnect/monorepo-python-web",
   image = ":python_web_image",
   tag = "1",
 )
