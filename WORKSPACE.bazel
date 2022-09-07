@@ -71,7 +71,38 @@ load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
 
 container_deps()
 
+# Load the macro that allows you to customize the docker toolchain configuration.
+load("@io_bazel_rules_docker//toolchains/docker:toolchain.bzl",
+    docker_toolchain_configure="toolchain_configure"
+)
+
+docker_toolchain_configure(
+  name = "docker_config",
+  # Replace this with a Bazel label to the config.json file. Note absolute or relative
+  # paths are not supported. Docker allows you to specify custom authentication credentials
+  # in the client configuration JSON file.
+  # See https://docs.docker.com/engine/reference/commandline/cli/#configuration-files
+  # for more details.
+  client_config="@//config.json",
+)
+
 # load base docker image for different languages
 
 load("@io_bazel_rules_docker//python3:image.bzl", _py_image_repos = "repositories")
 _py_image_repos()
+
+
+http_archive(
+    name = "io_buildbuddy_buildbuddy_toolchain",
+    sha256 = "a2a5cccec251211e2221b1587af2ce43c36d32a42f5d881737db3b546a536510",
+    strip_prefix = "buildbuddy-toolchain-829c8a574f706de5c96c54ca310f139f4acda7dd",
+    urls = ["https://github.com/buildbuddy-io/buildbuddy-toolchain/archive/829c8a574f706de5c96c54ca310f139f4acda7dd.tar.gz"],
+)
+
+load("@io_buildbuddy_buildbuddy_toolchain//:deps.bzl", "buildbuddy_deps")
+
+buildbuddy_deps()
+
+load("@io_buildbuddy_buildbuddy_toolchain//:rules.bzl", "buildbuddy")
+
+buildbuddy(name = "buildbuddy_toolchain")
