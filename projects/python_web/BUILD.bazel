@@ -17,18 +17,18 @@ py_binary(
     deps = [":python_web_lib"],
 )
 
-py_image(
-  name = "python_web_image",
-  srcs = ["python_web.py"],
-  deps = [":python_web_lib"],
-  main = "python_web.py",
-)
+# py_image(
+#   name = "python_web_image",
+#   srcs = ["python_web.py"],
+#   deps = [":python_web_lib"],
+#   main = "python_web.py",
+# )
 
-container_push(
-  name = "publish",
-  format = "Docker",
-  registry = "registry.hub.docker.com",
-  repository = "quanconnect/monorepo-python-web",
-  image = ":python_web_image",
-  tag = "1",
-)
+# container_push(
+#   name = "publish",
+#   format = "Docker",
+#   registry = "registry.hub.docker.com",
+#   repository = "quanconnect/monorepo-python-web",
+#   image = ":python_web_image",
+#   tag = "1",
+# )
